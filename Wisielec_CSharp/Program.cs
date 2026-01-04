@@ -9,6 +9,9 @@ class Program
 {
 
     static string nazwaPlikuBazy = "slowa.db";
+    // Zmienne do obsługi passy zwycięstw (branch dev)
+    static int aktualnaPassa = 0;
+    static int najlepszaPassa = 0;
 
     static void Main()
     {
@@ -64,6 +67,8 @@ class Program
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Pozostale proby: " + proby);
                 Console.ResetColor();
+                Console.WriteLine("Aktualna passa: " + aktualnaPassa);
+                Console.WriteLine("Najlepsza passa: " + najlepszaPassa);
 
                 // pobranie litery od gracza
                 Console.Write("Podaj litere: ");
@@ -111,20 +116,33 @@ class Program
 
             if (new string(ukryteLitery) == slowo)
             {
+                // wygrana – zwiekszamy passe
+                aktualnaPassa++;
+
+                if (aktualnaPassa > najlepszaPassa)
+                    najlepszaPassa = aktualnaPassa;
+
                 Console.ForegroundColor = ConsoleColor.Green;
                 RysujWisielca(proby);
                 Console.WriteLine();
                 Console.WriteLine("BRAWO! Odgadles slowo: " + slowo);
+                Console.WriteLine("Aktualna passa zwyciestw: " + aktualnaPassa);
+                Console.WriteLine("Najlepsza passa: " + najlepszaPassa);
                 Console.ResetColor();
             }
             else
             {
+                // przegrana – reset passy
+                aktualnaPassa = 0;
+
                 Console.ForegroundColor = ConsoleColor.Red;
                 RysujWisielca(0);
                 Console.WriteLine();
                 Console.WriteLine("KONIEC. Slowo to: " + slowo);
+                Console.WriteLine("Passa zostala zresetowana.");
                 Console.ResetColor();
             }
+
 
             Console.WriteLine();
             Console.WriteLine("Nacisnij Enter, aby zagrac jeszcze raz...");
@@ -297,3 +315,4 @@ class Program
         return "0"; // domyslne w razie bledu
     }
 }
+
